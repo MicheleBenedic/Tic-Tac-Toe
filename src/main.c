@@ -11,3 +11,38 @@
  *     il risultato finale.
  */
 
+#include <stdio.h>
+
+static const int BOARD_SIZE = 3;
+
+static void init_board(char board[BOARD_SIZE][BOARD_SIZE]) {
+    for (int row = 0; row < BOARD_SIZE; ++row) {
+        for (int col = 0; col < BOARD_SIZE; ++col) {
+            board[row][col] = ' ';
+        }
+    }
+}
+
+static void print_board(char board[BOARD_SIZE][BOARD_SIZE]) {
+    for (int row = 0; row < BOARD_SIZE; ++row) {
+        for (int col = 0; col < BOARD_SIZE; ++col) {
+            printf(" %c ", board[row][col]);
+            if (col < BOARD_SIZE - 1) {
+                printf("|");
+            }  
+        }
+        printf("\n");
+        if (row < BOARD_SIZE - 1) {
+            printf("-----------\n");
+        }
+
+    }
+}
+
+int main() {
+    char play_board[BOARD_SIZE][BOARD_SIZE];
+    init_board(play_board);
+    print_board(play_board);
+    printf("\n");
+    return 0;
+}
