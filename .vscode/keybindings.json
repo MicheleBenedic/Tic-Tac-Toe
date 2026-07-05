@@ -1,0 +1,11 @@
+[
+    {
+        "key": "alt+f1",
+        "command": "workbench.action.tasks.runTask",
+        "args": "clang: build and run"
+    },
+    {
+        "key": "alt+f2",
+        "command": "workbench.action.debug.start"
+    }
+]

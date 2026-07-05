@@ -1,0 +1,50 @@
+{
+    "version": "2.0.0",
+
+    "tasks": [
+        {
+            "label": "Build",
+            "type": "shell",
+            "command": "clang-22",
+
+            "args": [
+                "-std=c23",
+                "-Wall",
+                "-Wextra",
+                "-Wpedantic",
+                "-Wconversion",
+                "-g",
+                "-fsanitize=address",
+                "-fsanitize=undefined",
+                "${file}",
+                "-o",
+                "${fileBasenameNoExtension}"
+            ],
+
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Run",
+            "type": "shell",
+            "command": "./${fileBasenameNoExtension}",
+            "dependsOn": "Build",
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "clear": true
+            }
+        },
+        {
+            "label": "clang: build and run",
+            "dependsOn": [
+                "Build",
+                "Run"
+            ],
+            "dependsOrder": "sequence"
+        }
+    ]
+}

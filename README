@@ -1,0 +1,58 @@
+# Tris (Tic Tac Toe) in C
+
+Progetto di Tris scritto in C, realizzato seguendo i concetti del corso **EDUBE C
+Essentials 1** (OpenEDG / Cisco Networking Academy): variabili, operatori, istruzioni di
+controllo, cicli, funzioni e array.
+
+## Struttura del progetto
+
+```
+.
+├── src/
+│   └── main.c          # punto di ingresso del programma
+├── Makefile             # build da terminale (make, make run, make clean, ...)
+├── gen_compdb.py         # genera compile_commands.json per clangd
+├── .vscode/              # task di build/run/debug per VS Code
+├── .clang-format         # stile di formattazione automatica del codice
+├── .clang-tidy           # regole di analisi statica (linting)
+└── .clangd               # configurazione del language server per l'editor
+```
+
+## Requisiti
+
+- `clang` (testato con `clang-22`, standard C23)
+- `make` (opzionale, per la build da terminale)
+- `clang-format` / `clang-tidy` (opzionali, per formattazione e linting)
+
+## Come compilare ed eseguire
+
+### Con il Makefile
+
+```sh
+make        # compila (build di debug, con AddressSanitizer/UBSan)
+make run    # compila ed esegue
+make release # build ottimizzata, senza sanitizer
+make clean  # rimuove i file generati
+```
+
+### Con VS Code
+
+- `Alt+F1`: compila ed esegue il file C corrente
+- `Alt+F2`: avvia il debugger (lldb) sul file corrente
+
+### Manualmente
+
+```sh
+clang-22 -std=c23 -Wall -Wextra -Wpedantic -Wconversion -g src/main.c -o tic-tac-toe
+./tic-tac-toe
+```
+
+## Stato del progetto
+
+`src/main.c` contiene per ora solo lo scheletro iniziale (tabellone 3x3 inizializzato e
+stampato a video). La logica di gioco vera e propria — turni dei giocatori, input da
+tastiera, controllo di vittoria/pareggio — è lasciata come esercizio da completare.
+
+## Licenza
+
+Distribuito secondo licenza MIT. Vedi [LICENSE](LICENSE).

@@ -1,0 +1,25 @@
+# Binari compilati (build a file singolo: src/main.c -> src/main)
+/src/*
+!/src/*.c
+!/src/*.h
+tic-tac-toe
+source.txt
+
+# Oggetti e output di compilazione
+*.o
+*.obj
+*.out
+*.exe
+a.out
+
+# Generato da gen_compdb.py
+compile_commands.json
+
+# Cache di clangd
+.cache/
+.clangd/
+
+# Editor / OS
+*.swp
+*~
+.DS_Store

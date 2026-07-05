@@ -1,0 +1,34 @@
+CompileFlags:
+  Add:
+    - -std=c23
+    - -Wall
+    - -Wextra
+    - -Wpedantic
+    - -Wconversion
+  Compiler: clang-22
+  CompilationDatabase: .
+
+Diagnostics:
+  ClangTidy:
+    Add:
+      - bugprone-*
+      - readability-*
+      - misc-*
+      - performance-*
+      - portability-*
+      - cert-*
+    Remove:
+      - readability-magic-numbers
+      - readability-identifier-length
+      - bugprone-easily-swappable-parameters
+  UnusedIncludes: Strict
+  MissingIncludes: Strict
+
+Index:
+  Background: Build
+
+InlayHints:
+  Enabled: true
+  ParameterNames: true
+  DeducedTypes: true
+  Designators: true

@@ -1,0 +1,38 @@
+---
+# Configurazione pensata per un progetto didattico in C (corso EDUBE C Essentials 1):
+# niente controlli specifici per C++ (cppcoreguidelines/modernize), e si disattivano
+# i controlli troppo "rumorosi" per codice da corso introduttivo (magic numbers,
+# nomi di variabili corti come i, j, n, parametri facilmente scambiabili, ecc.).
+Checks: >
+  clang-diagnostic-*,
+  clang-analyzer-*,
+  bugprone-*,
+  cert-*,
+  misc-*,
+  performance-*,
+  portability-*,
+  readability-*,
+  -readability-magic-numbers,
+  -readability-identifier-length,
+  -readability-function-cognitive-complexity,
+  -misc-unused-parameters,
+  -bugprone-easily-swappable-parameters
+
+WarningsAsErrors: ''
+HeaderFilterRegex: '.*'
+FormatStyle: file
+InheritParentConfig: true
+
+CheckOptions:
+  - key: readability-identifier-naming.VariableCase
+    value: lower_case
+  - key: readability-identifier-naming.FunctionCase
+    value: lower_case
+  - key: readability-identifier-naming.ParameterCase
+    value: lower_case
+  - key: readability-identifier-naming.MacroDefinitionCase
+    value: UPPER_CASE
+  - key: readability-identifier-naming.GlobalConstantCase
+    value: UPPER_CASE
+  - key: readability-braces-around-statements.ShortStatementLines
+    value: '1'
