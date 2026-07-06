@@ -4,6 +4,8 @@
 !/src/*.h
 tic-tac-toe
 source.txt
+format_report
+linting_report
 
 # Oggetti e output di compilazione
 *.o
@@ -26,3 +28,4 @@ compile_commands.json
 
 # Note personali
 /risposte
+ispezione.md
