@@ -16,10 +16,9 @@
 #include <stdlib.h>
 
 static const int BOARD_SIZE = 3;
-static const int MAX_CHAR_INPUT = 1;
 
 typedef struct {
-    int x_axis, y_axis;
+    long x_axis, y_axis;
 } action;
 
 static void init_board(char board[BOARD_SIZE][BOARD_SIZE]) {
@@ -45,24 +44,44 @@ static void print_board(char board[BOARD_SIZE][BOARD_SIZE]) {
     }
 }
 
-static char player_move(bool which_player, char board[BOARD_SIZE][BOARD_SIZE]) {
+static void player_move(bool which_player, char board[BOARD_SIZE][BOARD_SIZE]) {
     while (true) {
         action move;
-        char input = 0;
+        move.x_axis = -1;
+        move.y_axis = -1;
+        char input[32];
+        char *endptr;
         print_board(board);
         if (!which_player) {
             puts("Giocatore 1, inserisci le coordinate della tua mossa:");
-            printf("asse x: ");
-            move.x_axis = fgets( &input, 1, stdin);
-            printf("\nasse y: ");
-            move.y_axis = fgets(&input,  1, stdin)
-            
+            while ((move.x_axis < 0 || move.x_axis > 2) && 
+            (move.y_axis < 0 || move.y_axis > 2)) {
+                printf("asse x: ");
+                if (fgets(input, sizeof(input), stdin) != NULL) {
+                    move.x_axis = strtol(input, &endptr, 10);
+                }
+                printf("\nasse y: ");
+                if (fgets(input, sizeof(input), stdin) != NULL) {
+                    move.y_axis = strtol(input, &endptr, 10);
+                }
+            }
+            board[move.x_axis][move.y_axis] = 'X';
+            which_player = ((!which_player) != 0);
         } else {
             puts("Giocatore 2, inserisci le coordinate della tua mossa:");
-            printf("asse x: ");
-            scanf("%i", &move.x_axis);
-            printf("\nasse y: ");
-            scanf("%i", &move.y_axis);
+            while ((move.x_axis < 0 || move.x_axis > 2) && 
+            (move.y_axis < 0 || move.y_axis > 2)) {
+                printf("asse x: ");
+                if (fgets(input, sizeof(input), stdin) != NULL) {
+                    move.x_axis = strtol(input, &endptr, 10);
+                }
+                printf("\nasse y: ");
+                if (fgets(input, sizeof(input), stdin) != NULL) {
+                    move.y_axis = strtol(input, &endptr, 10);
+                }
+            }
+            board[move.x_axis][move.y_axis] = 'O';
+            which_player = ((!which_player) != 0);
         }
     }
 }
@@ -73,7 +92,16 @@ int main() {
     init_board(play_board);
     printf("\n");
 
-    /* bool game = true;
+    while (true) {
+        player_move(players, play_board);
+        /* funzione che verifica se la partita continua oppure come
+         è terminata */
+    }
+
+    return 0;
+}
+
+/* bool game = true;
     while (game) {
         print_board(play_board);
         if (!players) {
@@ -93,6 +121,3 @@ int main() {
         }
 
     } */
-
-    return 0;
-}
