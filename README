@@ -1,32 +1,32 @@
 # Tris (Tic Tac Toe) in C
 
-Progetto di Tris scritto in C, realizzato seguendo i concetti del corso **EDUBE C
-Essentials 1** (OpenEDG / Cisco Networking Academy): variabili, operatori, istruzioni di
-controllo, cicli, funzioni e array.
+Tic-Tac-Toe project written in C, made with the **EDUBE C Essentials 1** concepts track 
+(OpenEDG / Cisco Networking Academy): variables, operators, if statements, loops,
+functions and arrays.
 
-## Struttura del progetto
+## Project's structure
 
-```
+```tree
 .
 ├── src/
-│   └── main.c          # punto di ingresso del programma
-├── Makefile             # build da terminale (make, make run, make clean, ...)
-├── gen_compdb.py         # genera compile_commands.json per clangd
-├── .vscode/              # task di build/run/debug per VS Code
-├── .clang-format         # stile di formattazione automatica del codice
-├── .clang-tidy           # regole di analisi statica (linting)
-└── .clangd               # configurazione del language server per l'editor
+│   └── main.c            # main source file
+├── Makefile              # build system (make, make run, make clean, ...)
+├── gen_compdb.py         # generates compile_commands.json for clangd
+├── .vscode/              # build/run/debug tasks
+├── .clang-format         # code format style
+├── .clang-tidy           # static analysis (linting)
+└── .clangd               # editor's language server config
 ```
 
-## Requisiti
+## Pre-requisites
 
 - `clang` (testato con `clang-22`, standard C23)
 - `make` (opzionale, per la build da terminale)
 - `clang-format` / `clang-tidy` (opzionali, per formattazione e linting)
 
-## Come compilare ed eseguire
+## How to compile and execute
 
-### Con il Makefile
+### With Makefile
 
 ```sh
 make        # compila (build di debug, con AddressSanitizer/UBSan)
@@ -35,24 +35,22 @@ make release # build ottimizzata, senza sanitizer
 make clean  # rimuove i file generati
 ```
 
-### Con VS Code
+### With VSCode
 
-- `Alt+F1`: compila ed esegue il file C corrente
-- `Alt+F2`: avvia il debugger (lldb) sul file corrente
+- `Alt+F1`: compiles and executes the current C file
+- `Alt+F2`: activates the debugger (lldb) over the current file
 
-### Manualmente
+### Manually
 
 ```sh
 clang-22 -std=c23 -Wall -Wextra -Wpedantic -Wconversion -g src/main.c -o tic-tac-toe
 ./tic-tac-toe
 ```
 
-## Stato del progetto
+## Project's status
 
-`src/main.c` contiene per ora solo lo scheletro iniziale (tabellone 3x3 inizializzato e
-stampato a video). La logica di gioco vera e propria — turni dei giocatori, input da
-tastiera, controllo di vittoria/pareggio — è lasciata come esercizio da completare.
+PROJECT COMPLETED
 
-## Licenza
+## License
 
-Distribuito secondo licenza MIT. Vedi [LICENSE](LICENSE).
+Distrubuited under MIT license. Read [LICENSE](LICENSE).
