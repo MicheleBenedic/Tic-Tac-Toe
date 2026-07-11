@@ -2,10 +2,10 @@
 /src/*
 !/src/*.c
 !/src/*.h
-tic-tac-toe
 source.txt
 format_report
 linting_report
+tic-tac-toe-DEBUG
 
 # Oggetti e output di compilazione
 *.o

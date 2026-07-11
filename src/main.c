@@ -18,7 +18,7 @@
 static const int BOARD_SIZE = 3;
 
 typedef struct {
-    long x_axis, y_axis;
+    int row, col;
 } action;
 
 static void init_board(char board[BOARD_SIZE][BOARD_SIZE]) {
@@ -44,91 +44,121 @@ static void print_board(char board[BOARD_SIZE][BOARD_SIZE]) {
     }
 }
 
+static bool read_index(const char *label, int *out) {
+    char input[32];
+    char *endptr;
+
+    printf("%s: ", label);
+    if (fgets(input, sizeof(input), stdin) == NULL) {
+        return false;
+    }
+
+    long value = strtol(input, &endptr, 10);
+    if (endptr == input || (*endptr != '\n' && *endptr != '\0')) {
+        return false; /* non era un numero */
+    }
+    if (value < 0 || value >= BOARD_SIZE) {
+        return false; /* fuori dai limiti */
+    }
+
+    *out = (int)value;
+    return true;
+}
+
+static int player_number(char marker) {
+    return (marker == 'X') ? 1 : 2;
+}
+
 /* language server: Function 'player_move' has cognitive complexity
 of 38 (threshold 25), perché? */
-static void player_move(bool which_player, char board[BOARD_SIZE][BOARD_SIZE]) {
+static void player_move(char marker, char board[BOARD_SIZE][BOARD_SIZE]) {
+    print_board(board);
+    printf("Player %d (%c), insert the coordinates of your move:\n",
+           player_number(marker), marker);
+
     while (true) {
         action move;
-        move.x_axis = -1;
-        move.y_axis = -1;
-        char input[32];
-        char *endptr;
-        print_board(board);
-        if (!which_player) {
-            puts("Giocatore 1, inserisci le coordinate della tua mossa:");
-            while ((move.x_axis < 0 || move.x_axis > 2) && (move.y_axis < 0 || move.y_axis > 2)) {
-                printf("asse x: ");
-                if (fgets(input, sizeof(input), stdin) != NULL) {
-                    move.x_axis = strtol(input, &endptr, 10);
-                }
-                printf("\nasse y: ");
-                if (fgets(input, sizeof(input), stdin) != NULL) {
-                    move.y_axis = strtol(input, &endptr, 10);
-                }
-            }
-            while (board[move.x_axis][move.y_axis] == ' ') {
-                puts("Coordinate già occupate, inseriscine altre!");
-                board[move.x_axis][move.y_axis] = 'X';
-                which_player = ((!which_player) != 0);
-            }
-        } else {
-            puts("Giocatore 2, inserisci le coordinate della tua mossa:");
-            while ((move.x_axis < 0 || move.x_axis > 2) && (move.y_axis < 0 || move.y_axis > 2)) {
-                printf("asse x: ");
-                if (fgets(input, sizeof(input), stdin) != NULL) {
-                    move.x_axis = strtol(input, &endptr, 10);
-                }
-                printf("\nasse y: ");
-                if (fgets(input, sizeof(input), stdin) != NULL) {
-                    move.y_axis = strtol(input, &endptr, 10);
-                }
-            }
-            while (board[move.x_axis][move.y_axis] == ' ') {
-                puts("Coordinate già occupate, inseriscine altre!");
-                board[move.x_axis][move.y_axis] = 'O';
-                which_player = ((!which_player) != 0);
-            }
+
+        if (!read_index("row (0-2)", &move.row) ||
+            !read_index("column (0-2)", &move.col)) {
+            puts("Coordinates not available, try again.");
+            continue;
         }
+        if (board[move.row][move.col] != ' ') {
+            puts("Square already occupied, insert new coordinates.");
+            continue;
+        }
+
+        board[move.row][move.col] = marker;
+        return;
     }
 }
 
-static bool game_result(bool status, char board[BOARD_SIZE][BOARD_SIZE]) {
-    status = true;
-    
-    for (int i = 0; i < BOARD_SIZE - 1; ++i) {
-        if (board[0][i] == board[1][i] && board[1][i] == board[2][i]) {
-            status = false;
-            return status;
+/* Ritorna il carattere del vincitore ('X' o 'O') se una linea è
+ * completa con lo stesso simbolo non vuoto, altrimenti ' '. */
+static char winner(char board[BOARD_SIZE][BOARD_SIZE]) {
+    for (int i = 0; i < BOARD_SIZE; ++i) {
+        /* righe */
+        if (board[i][0] != ' ' &&
+            board[i][0] == board[i][1] && board[i][1] == board[i][2]) {
+            return board[i][0];
         }
-        if (board[i][0] == board[i][1] && board[i][1] == board[i][2]) {
-            status = false;
-            return status;
+        /* colonne */
+        if (board[0][i] != ' ' &&
+            board[0][i] == board[1][i] && board[1][i] == board[2][i]) {
+            return board[0][i];
         }
     }
 
-    if (board[0][0] == board[1][1] && board[0][0] == board[2][2]) {
-        status = false;
+    /* diagonali */
+    if (board[0][0] != ' ' &&
+        board[0][0] == board[1][1] && board[1][1] == board[2][2]) {
+        return board[0][0];
+    }
+    if (board[0][2] != ' ' &&
+        board[0][2] == board[1][1] && board[1][1] == board[2][0]) {
+        return board[0][2];
     }
 
-    if (board[0][2] == board[1][1] && board[0][2] == board[2][0]) {
-        status = false;
-    }
+    return ' ';
+}
 
-    return status;
+/* True se non ci sono più caselle libere. */
+static bool board_full(char board[BOARD_SIZE][BOARD_SIZE]) {
+    for (int row = 0; row < BOARD_SIZE; ++row) {
+        for (int col = 0; col < BOARD_SIZE; ++col) {
+            if (board[row][col] == ' ') {
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
 int main() {
-    bool players = false;
-    bool still_playing = true;
     char play_board[BOARD_SIZE][BOARD_SIZE];
     init_board(play_board);
     printf("\n");
 
-    /* language server: This loop is infinite; none of its condition variables (still_playing)
-    are updated in the loop body, non è vero, perché protesta? */
-    while (still_playing) {
-        player_move(players, play_board);
-        still_playing = game_result(still_playing, play_board);
+    char current = 'X'; /* segno del giocatore di turno */
+    char won = ' ';
+
+    while (true) {
+        player_move(current, play_board);
+
+        won = winner(play_board);
+        if (won != ' ' || board_full(play_board)) {
+            break;
+        }
+
+        current = (current == 'X') ? 'O' : 'X'; /* passa il turno */
+    }
+
+    print_board(play_board);
+    if (won != ' ') {
+        printf("Player %d (%c) has won!\n", player_number(won), won);
+    } else {
+        puts("Tie!");
     }
 
     return 0;
