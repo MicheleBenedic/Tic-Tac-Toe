@@ -20,19 +20,19 @@ functions and arrays.
 
 ## Pre-requisites
 
-- `clang` (testato con `clang-22`, standard C23)
-- `make` (opzionale, per la build da terminale)
-- `clang-format` / `clang-tidy` (opzionali, per formattazione e linting)
+- `clang` (tested with `clang-22`, standard C23)
+- `make` (optional)
+- `clang-format` / `clang-tidy` (optional)
 
 ## How to compile and execute
 
 ### With Makefile
 
 ```sh
-make        # compila (build di debug, con AddressSanitizer/UBSan)
-make run    # compila ed esegue
-make release # build ottimizzata, senza sanitizer
-make clean  # rimuove i file generati
+make          # compiles (debug build, with AddressSanitizer/UBSan)
+make run      # compiles and executes
+make release  #  optimized build, without sanitizers
+make clean    # removes generated files
 ```
 
 ### With VSCode
@@ -44,6 +44,12 @@ make clean  # rimuove i file generati
 
 ```sh
 clang-22 -std=c23 -Wall -Wextra -Wpedantic -Wconversion -g src/main.c -o tic-tac-toe
+./tic-tac-toe
+```
+or...
+
+```sh
+clang-22 -std=c23 -Wall -Wextra -Wpedantic -Wconversion -02 src/main.c -o tic-tac-toe
 ./tic-tac-toe
 ```
 
