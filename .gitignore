@@ -6,6 +6,7 @@ source.txt
 format_report
 linting_report
 tic-tac-toe-DEBUG
+info-per-test.md
 
 # Oggetti e output di compilazione
 *.o

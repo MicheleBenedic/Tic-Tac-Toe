@@ -13,3 +13,6 @@ indent_size = 4
 [*.h]
 indent_style = space
 indent_size = 4
+
+[*.{txt,md}]
+max_line_length = 80
