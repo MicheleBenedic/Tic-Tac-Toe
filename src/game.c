@@ -28,7 +28,7 @@ void print_board(char board[BOARD_SIZE][BOARD_SIZE]) {
 
 bool read_index(const char *label, int *out) {
     char input[32];
-    char *endptr;
+    char *endptr = NULL;
 
     printf("%s: ", label);
     if (fgets(input, sizeof(input), stdin) == NULL) {

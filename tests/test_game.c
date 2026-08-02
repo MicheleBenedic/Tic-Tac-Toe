@@ -24,10 +24,6 @@ static void set_board(const char *cells) {
     }
 }
 
-/* ------------------------------------------------------------------ */
-/* Esempi gia' scritti: usali come modello                             */
-/* ------------------------------------------------------------------ */
-
 static void test_init_board_riempie_di_spazi(void) {
     for (int row = 0; row < BOARD_SIZE; ++row) {
         for (int col = 0; col < BOARD_SIZE; ++col) {
@@ -113,19 +109,6 @@ static void test_player_number_marcatore_x(void) {
 static void test_player_number_marcatore_o(void) {
     TEST_ASSERT_EQUAL_INT(2, player_number('O'));
 }
-/* ------------------------------------------------------------------ */
-/* TODO: scrivi tu questi test                                         */
-/* ------------------------------------------------------------------ */
-
-/* TODO: winner() su una colonna completa -> restituisce il marker */
-/* TODO: winner() sulla diagonale principale (0,0)-(1,1)-(2,2) */
-/* TODO: winner() sull'antidiagonale (0,2)-(1,1)-(2,0) */
-/* TODO: winner() su board vuota -> ' ' */
-/* TODO: winner() su board piena senza vincitore (pareggio) -> ' ' */
-/* TODO: board_full() su board vuota -> false */
-/* TODO: board_full() con una sola casella libera -> false */
-/* TODO: board_full() su board piena -> true */
-/* TODO: player_number('X') -> 1, player_number('O') -> 2 */
 
 int main(void) {
     UNITY_BEGIN();
@@ -142,6 +125,5 @@ int main(void) {
     RUN_TEST(test_board_full_su_board_piena);
     RUN_TEST(test_player_number_marcatore_x);
     RUN_TEST(test_player_number_marcatore_o);
-    /* TODO: aggiungi qui una RUN_TEST per ogni test che scrivi sopra */
     return UNITY_END();
 }
