@@ -5,6 +5,7 @@
 source.txt
 format_report
 linting_report
+valgrind_report.txt
 tic-tac-toe-DEBUG
 info-per-test.md
 

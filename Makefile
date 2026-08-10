@@ -19,6 +19,10 @@ TEST_SRC  := $(wildcard $(TEST_DIR)/*.c)
 GAME_SRC  := $(filter-out src/main.c,$(SRC))
 TEST_BIN  := $(BIN_DIR)/test_game
 
+# --- VALGRIND ---
+VFLAGS = --leak-check=full --show-leak-kinds=all --track-origins=yes \
+  	--log-file=valgrind_report.txt
+
 .PHONY: all run release test clean format tidy compdb
 
 all: $(BIN)
@@ -46,8 +50,12 @@ $(TEST_BIN): $(TEST_SRC) $(GAME_SRC) $(UNITY_SRC) | $(BIN_DIR)
 	$(CC) $(CFLAGS) $(SAN) -I$(TEST_DIR) $^ -o $@
 
 format:
-	clang-format-22 -i $(SRC) > $(FILE_F) 
+	clang-format-22 -i $(SRC) > $(FILE_F)
 	code $(FILE_F)
+
+valgrind: $(BIN_DIR)/$(BIN)
+	valgrind $(VFLAGS) \
+	./$(BIN_DIR)/$(BIN)
 
 lint: compdb
 	clang-tidy-22 $(SRC) -- $(STD) > $(FILE_L)
