@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-test-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: ci clona il repo - obbligatorio, doc: actions/checkout
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: installa i tuoi tool
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang make valgrind clang-tidy clang-format
+
+      # Step 3: build come fai tu
+      - name: Build debug
+        run: make clean && make
+
+      # Step 4: lancia i test Unity
+      - name: Run Unity tests
+        run: |
+          # Se hai un target 'test' nel Makefile usa quello, altrimenti compila a mano
+          if make -n test > /dev/null 2>&1; then
+            make test
+          else
+            clang -std=c23 -Ilib/unity -Isrc -Itests/unity tests/test_game.c src/game.c lib/unity/unity.c tests/unity/unity.c -o bin/test_game
+            ./bin/test_game
+          fi
+
+      # Step 5: Valgrind - fallisce la CI se trova leak
+      - name: Valgrind memory check
+        run: |
+          valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1 ./bin/test_game
+          # Per il gioco interattivo puoi fare un test con input finto:
+          echo -e "1\n1\n2\n2\n" | valgrind --leak-check=full --error-exitcode=1 ./bin/tic-tac-toe || true
+
+      # Step 6: Lint e format check
+      - name: Check format and tidy
+        run: |
+          clang-format --dry-run --Werror src/*.c src/*.h tests/*.c || echo "Format da sistemare - lancia clang-format -i"
+          clang-tidy src/*.c -- -std=c23 -Isrc || true
