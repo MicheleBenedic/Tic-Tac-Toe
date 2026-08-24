@@ -18,6 +18,8 @@ jobs:
       # Step 2: installa i tuoi tool
       - name: Install dependencies
         run: |
+          wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+          sudo apt-add-repository "deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-22 main"
           sudo apt-get update
           sudo apt-get install -y clang-22 clang-tidy-22 clang-format-22 make valgrind
 
