@@ -19,7 +19,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y clang make valgrind clang-tidy clang-format
+          sudo apt-get install -y clang-22 clang-tidy-22 clang-format-22 make valgrind
 
       # Step 3: build come fai tu
       - name: Build debug
