@@ -9,15 +9,28 @@ functions and arrays.
 ## Project's structure
 
 ```tree
-.
-├── src/
-│   └── main.c            # main source file
-├── Makefile              # build system (make, make run, make clean, ...)
-├── gen_compdb.py         # generates compile_commands.json for clangd
-├── .vscode/              # build/run/debug tasks
-├── .clang-format         # code format style
-├── .clang-tidy           # static analysis (linting)
-└── .clangd               # editor's language server config
+tic-tac-toe/
+├── LICENSE
+├── Makefile
+├── README.md
+├── docker.sh
+├── dockerfile
+├── docs
+│   └── VALGRIND_NOTES.md
+├── gen_compdb.py
+├── gitpush.sh
+├── lib
+│   └── unity
+├── src
+│   ├── game.c
+│   ├── game.h
+│   └── main.c
+└── tests
+    ├── test_game.c
+    └── unity
+        ├── unity.c
+        ├── unity.h
+        └── unity_internals.h
 ```
 
 ## Pre-requisites
