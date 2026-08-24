@@ -1,5 +1,7 @@
 # Tris (Tic Tac Toe) in C
 
+![CI](https://github.com/MicheleBenedic/Tic-Tac-Toe/actions/workflows/ci.yml/badge.svg)
+
 Tic-Tac-Toe project written in C, made with the **EDUBE C Essentials 1** concepts track 
 (OpenEDG / Cisco Networking Academy): variables, operators, if statements, loops,
 functions and arrays.
