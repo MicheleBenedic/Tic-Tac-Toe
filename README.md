@@ -4,7 +4,9 @@
 
 Tic-Tac-Toe project written in C, made with the **EDUBE C Essentials 1** concepts track 
 (OpenEDG / Cisco Networking Academy): variables, operators, if statements, loops,
-functions and arrays.
+functions and arrays. Project expanded autonomously with modular structure, Unity Framework tests,
+Valgrind and AddressSanitizer, Docker, CI and Github Actions. _C Essentials and Advanced are 
+still in progress_.
 
 ## Project's structure
 
